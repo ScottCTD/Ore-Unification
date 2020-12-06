@@ -17,18 +17,21 @@ public class EventHandler {
         init();
     }
 
+    public static boolean isEnableTickEventListener, isEnableEntityJoinWorldListener;
     public static int playerTickEventGap;
 
     // Lowest priority - execute after everything else completed
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (!event.player.getEntityWorld().isRemote && event.phase == TickEvent.Phase.END && event.player.world.getGameTime() % playerTickEventGap == 0) {
-            init();
-            PlayerEntity player = event.player;
-            for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-                ItemStack stack = player.inventory.getStackInSlot(i);
-                if (!stack.isEmpty()) {
-                    player.inventory.setInventorySlotContents(i, new ItemStack(OreUnification.replace(stack.getItem()), stack.getCount()));
+        if (isEnableTickEventListener) {
+            if (!event.player.getEntityWorld().isRemote && event.phase == TickEvent.Phase.END && event.player.world.getGameTime() % playerTickEventGap == 0) {
+                init();
+                PlayerEntity player = event.player;
+                for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+                    ItemStack stack = player.inventory.getStackInSlot(i);
+                    if (!stack.isEmpty()) {
+                        player.inventory.setInventorySlotContents(i, new ItemStack(OreUnification.replace(stack.getItem()), stack.getCount()));
+                    }
                 }
             }
         }
@@ -36,12 +39,14 @@ public class EventHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
-        if (!event.getWorld().isRemote && event.getEntity() instanceof ItemEntity) {
-            init();
-            ItemEntity itemEntity = (ItemEntity) event.getEntity();
-            ItemStack itemStack = itemEntity.getItem();
-            Item replacement = OreUnification.replace(itemStack.getItem());
-            itemEntity.setItem(new ItemStack(replacement, itemStack.getCount()));
+        if (isEnableEntityJoinWorldListener) {
+            if (!event.getWorld().isRemote && event.getEntity() instanceof ItemEntity) {
+                init();
+                ItemEntity itemEntity = (ItemEntity) event.getEntity();
+                ItemStack itemStack = itemEntity.getItem();
+                Item replacement = OreUnification.replace(itemStack.getItem());
+                itemEntity.setItem(new ItemStack(replacement, itemStack.getCount()));
+            }
         }
     }
 
@@ -55,6 +60,8 @@ public class EventHandler {
         OreUnification.tagsBlackList = Config.tagsBlackList.get();
         OreUnification.modsPriority = Config.modsPriority.get();
 
+        isEnableTickEventListener = Config.isEnableTickEventListener.get();
+        isEnableEntityJoinWorldListener = Config.isEnableEntityJoinWorldListener.get();
         playerTickEventGap = Config.playerTickEventGap.get();
     }
 

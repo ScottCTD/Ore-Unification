@@ -40,6 +40,7 @@ public class OreUnification {
         if (isNeedToReplace(target)) {
             Set<ResourceLocation> targetTags = target.getTags();
             ResourceLocation validTag = getValidTag(targetTags);
+            LOGGER.warn(validTag == null ? "null" : validTag.toString());
             if (validTag != null) {
                 ITag<Item> itemITag = ItemTags.getCollection().get(validTag);
                 if (itemITag != null) {
@@ -97,7 +98,7 @@ public class OreUnification {
         String nameSpaceC = candidate.getNamespace();
         if (!nameSpaceT.equals(nameSpaceC)) return false;
 
-        String pathT = target.substring(nameSpaceT.length());
+        String pathT = target.substring(nameSpaceT.length() + 1);
         String identifierT = pathT.contains("/") ? pathT.substring(0, pathT.indexOf("/")) : pathT;
         String pathC = candidate.getPath();
         String identifierC = pathC.contains("/") ? pathC.substring(0, pathC.indexOf("/")) : pathC;
