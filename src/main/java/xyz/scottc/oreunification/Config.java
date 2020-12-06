@@ -1,6 +1,5 @@
 package xyz.scottc.oreunification;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.Arrays;
