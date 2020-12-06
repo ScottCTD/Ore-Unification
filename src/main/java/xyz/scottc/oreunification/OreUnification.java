@@ -40,7 +40,6 @@ public class OreUnification {
         if (isNeedToReplace(target)) {
             Set<ResourceLocation> targetTags = target.getTags();
             ResourceLocation validTag = getValidTag(targetTags);
-            LOGGER.warn(validTag == null ? "null" : validTag.toString());
             if (validTag != null) {
                 ITag<Item> itemITag = ItemTags.getCollection().get(validTag);
                 if (itemITag != null) {

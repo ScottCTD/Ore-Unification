@@ -1,0 +1,11 @@
+{
+  "config.oreunification.item_registryname_mode_comment": "True to enable whitelist, and false to enable blacklist.\nIf the whitelist was enabled, the blacklist won't do anything.",
+  "config.oreunification.item_registryname_whitelist_comment": "Whitelist of items to be replaced, not commonly used. E.g. \"minecraft:iron_ingot\"",
+  "config.oreunification.item_registryname_blacklist_comment": "Blacklist of items to be replaced. E.g. \"minecraft:iron_ingot\"",
+  "config.oreunification.tags_whitelist_comment": "Whitelist for tags to be replaced.\n[Notice]If you want to match all the occurrences, you have to add \"*\"!\n(e.g. \"forge:ingots/*\")\nYou can use * but you cannot use other regex.",
+  "config.oreunification.tags_blacklist_comment": "Blacklist for tags to be replaced.\nThe priority of blacklist is higher than that of whitelist. So if you have both \"forge:ingots/*\" in the whitelist and blacklist, \"forge:ingots/*\" will not be replaced.",
+  "config.oreunification.mods_priority_comment": "Mods Priority Settings (e.g. mekanism)\nFrom highest to lowest.\nUse mod id here (For \"mekanism:copper_ingot\", the mod id is \"mekanism\"\nThe first one should always be \"minecraft\"",
+  "config.oreunification.is_enable_player_tick_comment": "True to enable replacing items in players' inventory every configurable period.",
+  "config.oreunification.player_tick_gap_comment": "The period of ticks to replace the entire player inventory if \"EnablePlayerTickListener\" is true. 20 tick (= 1 seconds) by default",
+  "config.oreunification.is_enable_entity_join_world_comment": "True to enable replacing items when items drop."
+}

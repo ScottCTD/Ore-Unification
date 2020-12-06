@@ -1,6 +1,6 @@
-tasks.withType(Jar) {
+/*tasks.withType(Jar) {
     destinationDir = file("C:\\Games\\Minecraft\\ModdingTestClient\\.minecraft\\mods")
-}
+}*/
 
 buildscript {
     repositories {
@@ -19,7 +19,7 @@ apply plugin: 'maven-publish'
 
 version = "${mod_version}"
 group = "xyz.scottc.${modid}" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "Ore Unification"
+archivesBaseName = "OreUnification"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
