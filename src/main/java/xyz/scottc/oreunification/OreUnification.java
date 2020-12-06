@@ -36,20 +36,16 @@ public class OreUnification {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
     }
 
-    public static @NotNull Item replace(Item target) {
+    public static @NotNull Item replace(Item target, ResourceLocation validTag) {
         if (isNeedToReplace(target)) {
-            Set<ResourceLocation> targetTags = target.getTags();
-            ResourceLocation validTag = getValidTag(targetTags);
-            if (validTag != null) {
-                ITag<Item> itemITag = ItemTags.getCollection().get(validTag);
-                if (itemITag != null) {
-                    List<Item> allItems = itemITag.getAllElements();
-                    for (String s : modsPriority) {
-                        for (Item resultItem : allItems) {
-                            ResourceLocation resultName = resultItem.getRegistryName();
-                            if (resultName != null) {
-                                if (resultName.getNamespace().equals(s)) return resultItem;
-                            }
+            ITag<Item> itemITag = ItemTags.getCollection().get(validTag);
+            if (itemITag != null) {
+                List<Item> allItems = itemITag.getAllElements();
+                for (String s : modsPriority) {
+                    for (Item resultItem : allItems) {
+                        ResourceLocation resultName = resultItem.getRegistryName();
+                        if (resultName != null) {
+                            if (resultName.getNamespace().equals(s)) return resultItem;
                         }
                     }
                 }
@@ -108,7 +104,7 @@ public class OreUnification {
     }
 
     // If the target Item is in the itemBlackList, not replace it.
-    private static boolean isNeedToReplace(Item target) {
+    public static boolean isNeedToReplace(Item target) {
         ResourceLocation registryName = target.getRegistryName();
         if (registryName != null) {
             if (OreUnification.isEnableItemsWhiteList) {

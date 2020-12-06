@@ -4,6 +4,7 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -29,8 +30,10 @@ public class EventHandler {
                 PlayerEntity player = event.player;
                 for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
                     ItemStack stack = player.inventory.getStackInSlot(i);
-                    if (!stack.isEmpty()) {
-                        player.inventory.setInventorySlotContents(i, new ItemStack(OreUnification.replace(stack.getItem()), stack.getCount()));
+                    Item item = stack.getItem();
+                    ResourceLocation validTag = OreUnification.getValidTag(item.getTags());
+                    if (!stack.isEmpty() && validTag != null) {
+                        player.inventory.setInventorySlotContents(i, new ItemStack(OreUnification.replace(item, validTag), stack.getCount()));
                     }
                 }
             }
@@ -44,13 +47,15 @@ public class EventHandler {
                 init();
                 ItemEntity itemEntity = (ItemEntity) event.getEntity();
                 ItemStack itemStack = itemEntity.getItem();
-                Item replacement = OreUnification.replace(itemStack.getItem());
-                itemEntity.setItem(new ItemStack(replacement, itemStack.getCount()));
+                Item item = itemStack.getItem();
+                ResourceLocation validTag = OreUnification.getValidTag(item.getTags());
+                if (validTag != null) {
+                    Item replacement = OreUnification.replace(item, validTag);
+                    itemEntity.setItem(new ItemStack(replacement, itemStack.getCount()));
+                }
             }
         }
     }
-
-
 
     public static void init() {
         OreUnification.isEnableItemsWhiteList = Config.isEnableItemsWhiteList.get();
