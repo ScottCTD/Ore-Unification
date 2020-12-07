@@ -14,10 +14,6 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = OreUnification.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler {
 
-    static {
-        init();
-    }
-
     public static boolean isEnableTickEventListener, isEnableEntityJoinWorldListener;
     public static int playerTickEventGap;
 
@@ -26,7 +22,6 @@ public class EventHandler {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (isEnableTickEventListener) {
             if (!event.player.getEntityWorld().isRemote && event.phase == TickEvent.Phase.END && event.player.world.getGameTime() % playerTickEventGap == 0) {
-                init();
                 PlayerEntity player = event.player;
                 for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
                     ItemStack stack = player.inventory.getStackInSlot(i);
@@ -44,7 +39,6 @@ public class EventHandler {
     public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
         if (isEnableEntityJoinWorldListener) {
             if (!event.getWorld().isRemote && event.getEntity() instanceof ItemEntity) {
-                init();
                 ItemEntity itemEntity = (ItemEntity) event.getEntity();
                 ItemStack itemStack = itemEntity.getItem();
                 Item item = itemStack.getItem();
@@ -55,19 +49,6 @@ public class EventHandler {
                 }
             }
         }
-    }
-
-    public static void init() {
-        OreUnification.isEnableItemsWhiteList = Config.isEnableItemsWhiteList.get();
-        OreUnification.itemsWhiteList = Config.itemsWhiteList.get();
-        OreUnification.tagsWhiteList = Config.tagsWhiteList.get();
-        OreUnification.itemsBlackList = Config.itemsBlackList.get();
-        OreUnification.tagsBlackList = Config.tagsBlackList.get();
-        OreUnification.modsPriority = Config.modsPriority.get();
-
-        isEnableTickEventListener = Config.isEnableTickEventListener.get();
-        isEnableEntityJoinWorldListener = Config.isEnableEntityJoinWorldListener.get();
-        playerTickEventGap = Config.playerTickEventGap.get();
     }
 
 }

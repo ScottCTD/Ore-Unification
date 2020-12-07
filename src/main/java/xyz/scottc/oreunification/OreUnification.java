@@ -36,6 +36,19 @@ public class OreUnification {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
     }
 
+    public static void init() {
+        OreUnification.isEnableItemsWhiteList = Config.isEnableItemsWhiteList.get();
+        OreUnification.itemsWhiteList = Config.itemsWhiteList.get();
+        OreUnification.tagsWhiteList = Config.tagsWhiteList.get();
+        OreUnification.itemsBlackList = Config.itemsBlackList.get();
+        OreUnification.tagsBlackList = Config.tagsBlackList.get();
+        OreUnification.modsPriority = Config.modsPriority.get();
+
+        EventHandler.isEnableTickEventListener = Config.isEnableTickEventListener.get();
+        EventHandler.isEnableEntityJoinWorldListener = Config.isEnableEntityJoinWorldListener.get();
+        EventHandler.playerTickEventGap = Config.playerTickEventGap.get();
+    }
+
     public static @NotNull Item replace(Item target, ResourceLocation validTag) {
         if (isNeedToReplace(target)) {
             ITag<Item> itemITag = ItemTags.getCollection().get(validTag);

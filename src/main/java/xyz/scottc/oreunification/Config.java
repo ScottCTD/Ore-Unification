@@ -1,11 +1,15 @@
 package xyz.scottc.oreunification;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@Mod.EventBusSubscriber(modid = OreUnification.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Config {
 
     public static ForgeConfigSpec SERVER_CONFIG;
@@ -27,6 +31,7 @@ public class Config {
         initEventsSettings();
 
         SERVER_CONFIG = SERVER_BUILDER.build();
+        OreUnification.init();
     }
 
     private static void initMatchingSettings() {
@@ -58,7 +63,7 @@ public class Config {
         tagsWhiteList = SERVER_BUILDER
                 .comment("Whitelist for tags to be replaced.\n[Notice]If you want to match all the occurrences, you have to add \"*\"!\n(e.g. \"forge:ingots/*\")\nYou can use * but you cannot use other regex.")
                 .translation("config.oreunification.tags_whitelist_comment")
-                .defineList("WhiteList", Arrays.asList("forge:ingots/*", "forge:nuggets/*", "forge:dusts/*", "forge:gems/*", "forge:ores/*"), Config::isItemOrTag);
+                .defineList("WhiteList", Arrays.asList("forge:ingots/*", "forge:nuggets/*", "forge:dusts/*", "forge:gems/*", "forge:ores/*", "forge:storage_blocks"), Config::isItemOrTag);
 
         tagsBlackList = SERVER_BUILDER
                 .comment("Blacklist for tags to be replaced.\nThe priority of blacklist is higher than that of whitelist. So if you have both \"forge:ingots/*\" in the whitelist and blacklist, \"forge:ingots/*\" will not be replaced.")
@@ -107,6 +112,18 @@ public class Config {
             return ((String) s).contains(":");
         }
         return false;
+    }
+
+    @SubscribeEvent
+    public static void onLoading(ModConfig.Loading event) {
+        OreUnification.init();
+        OreUnification.LOGGER.info("Config Loaded!");
+    }
+
+    @SubscribeEvent
+    public static void onReloading(ModConfig.Reloading event) {
+        OreUnification.init();
+        OreUnification.LOGGER.info("Config Reloaded!");
     }
 
 }
