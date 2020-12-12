@@ -44,6 +44,12 @@ public class OreUnification {
         OreUnification.tagsBlackList = Config.tagsBlackList.get();
         OreUnification.modsPriority = Config.modsPriority.get();
 
+        Collections.sort(OreUnification.itemsWhiteList);
+        Collections.sort(OreUnification.itemsBlackList);
+        Collections.sort(OreUnification.tagsWhiteList);
+        Collections.sort(OreUnification.tagsBlackList);
+        Collections.sort(OreUnification.modsPriority);
+
         EventHandler.isEnableTickEventListener = Config.isEnableTickEventListener.get();
         EventHandler.isEnableEntityJoinWorldListener = Config.isEnableEntityJoinWorldListener.get();
         EventHandler.playerTickEventGap = Config.playerTickEventGap.get();
