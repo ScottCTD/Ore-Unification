@@ -6,7 +6,7 @@ E.g. .minecraft/saves/NewWorld/serverconfigs/oreunification-server.toml
 
 **Minecraft Version: 1.16.4**
 
-**Mod Version: 1.0.0**
+**Mod Version: 1.0.2**
 
 A highly-configurable Minecraft mod which can unify ores, ingots, nuggets, dusts from different mods.
 
